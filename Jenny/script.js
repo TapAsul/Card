@@ -179,15 +179,89 @@ if ("IntersectionObserver" in window && !REDUCED_MOTION) {
    SAVE CONTACT — opens the contact page
 ===================================== */
 
+/* ---------- SAVE CONTACT ----------
+   Tapping either Save button now saves the FULL business contact
+   (name, company, job title, mobile, Viber and email) straight to
+   the phone. In-app browsers cannot download files, so those
+   visitors are sent to contact.html, which explains what to do. */
+
 const saveButton = document.getElementById("saveContact");
 const quickSave = document.getElementById("quickSave");
+const saveMessage = document.getElementById("saveMessage");
+const ALL_CONTACTS_VCF = "Jenny-Joven-Beria-ALR.vcf";
 
 function openContactPage() {
   window.location.href = "contact.html";
 }
 
-if (saveButton) saveButton.addEventListener("click", openContactPage);
-if (quickSave) quickSave.addEventListener("click", openContactPage);
+function isIOS() {
+  const ua = navigator.userAgent || "";
+  return /iPad|iPhone|iPod/i.test(ua) ||
+    (navigator.platform === "MacIntel" && (navigator.maxTouchPoints || 0) > 1);
+}
+
+function isAndroid() {
+  return /android/i.test(navigator.userAgent || "");
+}
+
+function detectInApp() {
+  const ua = navigator.userAgent || "";
+  if (window.navigator.standalone === true) return false;
+  if (/FBAN|FBAV|FB_IAB|FB4A|Instagram|Line\/|Snapchat|TikTok|Musical\.ly|Pinterest/i.test(ua)) return true;
+  return /; wv\)/.test(ua); // Android WebView
+}
+
+function say(message) {
+  if (saveMessage) saveMessage.textContent = message;
+}
+
+async function downloadVcf(url, filename) {
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) return "missing";
+    const blob = new Blob([await response.text()], { type: "text/vcard;charset=utf-8" });
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = objectUrl;
+    link.download = filename;
+    link.rel = "noopener";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 5000);
+    return "ok";
+  } catch (error) {
+    return "error";
+  }
+}
+
+async function saveAllContacts() {
+  // In-app browsers block downloads - use the page that guides the user.
+  if (detectInApp()) {
+    openContactPage();
+    return;
+  }
+
+  say("Preparing contact…");
+  const result = await downloadVcf(ALL_CONTACTS_VCF, ALL_CONTACTS_VCF);
+
+  if (result === "ok") {
+    if (isIOS()) {
+      say("Tap \u201CAdd All Contacts\u201D to save Jenny to your phone.");
+    } else if (isAndroid()) {
+      say("File saved - tap Open File to import it into Contacts.");
+    } else {
+      say("Contact file downloading. Open it to save the contact.");
+    }
+    return;
+  }
+
+  // Blob path unavailable or file missing - fall back to the plain link.
+  openContactPage();
+}
+
+if (saveButton) saveButton.addEventListener("click", saveAllContacts);
+if (quickSave) quickSave.addEventListener("click", saveAllContacts);
 
 /* =====================================
    SHARE CARD
