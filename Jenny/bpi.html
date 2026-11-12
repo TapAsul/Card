@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>BPI Transfer | ALR Steel</title>
+  <meta name="theme-color" content="#dfe8f1">
+  <meta name="description" content="Bank transfer details for ALR Steel Fabrication and Services OPC — BPI account 4449-0369-19.">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <link rel="stylesheet" href="style.css?v=6">
+  <script src="payment.js?v=6" defer></script>
+</head>
+
+<body>
+  <div class="bg-fixed" aria-hidden="true"></div>
+  <div class="bg-tint" aria-hidden="true"></div>
+  <main class="payment-page">
+    <div class="payment-container">
+
+      <nav class="payment-topbar">
+        <a class="back-link" href="index.html">
+          <span aria-hidden="true">&larr;</span> Back to card
+        </a>
+        <span class="payment-brand">ALR STEEL</span>
+      </nav>
+
+      <section class="payment-panel">
+        <div class="payment-provider-logo">
+            <img src="images/bpi-logo.svg" alt="BPI logo">
+          </div>
+
+        <h1>BPI</h1>
+        <p class="payment-description">
+          Transfer to our BPI account using the details below.
+        </p>
+
+        <div class="account-card">
+          <div class="account-row">
+            <span class="account-label">Account name</span>
+            <span class="account-value">Alejandro L. Rejano</span>
+          </div>
+          <div class="account-row">
+            <span class="account-label">Account number</span>
+            <span class="account-value account-number" id="accountNumber" role="button" tabindex="0">4449-0369-19</span>
+          </div>
+          <div class="account-row">
+            <span class="account-label">Branch</span>
+            <span class="account-value">1356 Rizal Ext., Grace Park East, Caloocan</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="payment-action"
+          data-copy="4449-0369-19"
+          data-copy-label="Account number"
+        >
+          Copy account number
+        </button>
+
+        <button
+          type="button"
+          class="payment-action secondary"
+          data-copy="Alejandro L. Rejano"
+          data-copy-label="Account name"
+        >
+          Copy account name
+        </button>
+
+        <p class="payment-status" id="payStatus" role="status"></p>
+
+        <div class="payment-instructions">
+          <strong>How to pay</strong>
+          <ol>
+            <li>Tap <em>Copy account number</em> above.</li>
+            <li>Open your BPI app, or any bank app that supports InstaPay or PESONet.</li>
+            <li>Choose <em>Send money / Transfer</em>, then paste the account number.</li>
+            <li>Check that the account name matches before you confirm.</li>
+          </ol>
+        </div>
+
+        <p class="payment-disclaimer">
+          Always verify the recipient details in your banking app before sending.
+          ALR Steel is not responsible for transfers sent to the wrong account.
+        </p>
+      </section>
+
+      <p class="payment-disclaimer">
+        ALR Steel Fabrication and Services OPC
+      </p>
+
+    </div>
+  </main>
+</body>
+</html>

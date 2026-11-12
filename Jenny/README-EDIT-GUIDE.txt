@@ -16,11 +16,13 @@ FOLDER STRUCTURE (all separated):
 - favicon.svg, favicon-32.png, apple-touch-icon.png, icon-512.png = app icons (from ALR logo)
 - contact.html + contact.js = Save Contact page (phone/email options)
 - Jenny-Joven-Beria-Phone.vcf / -Email.vcf / -ALR.vcf = the actual contact downloads
-- gcash.html, bdo.html = payment pages (add QR at images/gcash-qr.png, images/bdo-qr.png)
+- security-bank.html, bpi.html = bank transfer pages (no QR needed; the account
+   number is on the page with a tap-to-copy button)
 - print-card.html   = printable paper card (bank-card size)
 
 HOW TO EDIT:
-1. NAME / TITLE / BIO: open index.html, edit <h1>, .profile-title-chip, .profile-bio
+1. NAME / ROLE / BIO: open index.html, edit <h1>, .hero-name strong (name),
+   .hero-role (job title), .hero-name small (business name), .profile-bio
 2. COLORS: open style.css, edit the :root variables (--accent, --bg, --card...)
 3. PHOTO: replace images/my-photo.png (keep same filename)
    BG PHOTO: the blurred backdrop uses images/work-2.jpg (see .bg-fixed in style.css)
@@ -30,7 +32,9 @@ HOW TO EDIT:
    matching <button class="work-dot" data-slide="N"> in the carousel-dots row.
 5. SOCIAL LINKS: in index.html, swap Instagram/Facebook/TikTok URLs + handles
 6. SERVICES: in index.html, edit the .service-row blocks
-7. SAVE CONTACT INFO: phone/email appear in 4 places — keep them matching:
+7. BANK DETAILS: edit the account name / number / branch inside security-bank.html
+   and bpi.html (each value appears once, in the .account-card block)
+8. SAVE CONTACT INFO: phone/email appear in 4 places — keep them matching:
    script.js CONFIG, contact.html text+links, contact.js CONTACT object,
    and the 3 .vcf files
 
