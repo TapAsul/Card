@@ -14,8 +14,8 @@ FOLDER STRUCTURE (all separated):
 - images/my-photo.png = YOUR profile photo
 - images/work-1.jpg to work-6.jpg = project photos (from the "Jenny" Google Drive folder)
 - favicon.svg, favicon-32.png, apple-touch-icon.png, icon-512.png = app icons (from ALR logo)
-- contact.html + contact.js = Save Contact page (phone/email options)
-- Jenny-Joven-Beria-Phone.vcf / -Email.vcf / -ALR.vcf = the actual contact downloads
+- contact.html + contact.js = Save Contact page (mobile / Viber / email options)
+- Jenny-Joven-Beria-Phone.vcf / -Viber.vcf / -Email.vcf / -ALR.vcf = contact downloads
 - security-bank.html, bpi.html = bank transfer pages (no QR needed; the account
    number is on the page with a tap-to-copy button)
 - print-card.html   = printable paper card (bank-card size)
@@ -34,9 +34,11 @@ HOW TO EDIT:
 6. SERVICES: in index.html, edit the .service-row blocks
 7. BANK DETAILS: edit the account name / number / branch inside security-bank.html
    and bpi.html (each value appears once, in the .account-card block)
-8. SAVE CONTACT INFO: phone/email appear in 4 places — keep them matching:
+8. SAVE CONTACT INFO: the numbers/email appear in 4 places — keep them matching:
    script.js CONFIG, contact.html text+links, contact.js CONTACT object,
-   and the 3 .vcf files
+   and the 4 .vcf files
+   - Mobile : 0993 323 4360  (Phone.vcf, ALR.vcf)
+   - Viber  : 0977 116 4273  (Viber.vcf)
 
 IN-APP BROWSERS (Messenger/Instagram/TikTok): these block downloads, so the
 contact page auto-shows an 'Open in Safari/Chrome' guide banner there.

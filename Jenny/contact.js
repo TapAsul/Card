@@ -17,6 +17,7 @@ const CONTACT = {
   name: "Jenny Joven Beria",
   organization: "ALR Steel Fabrication and Services OPC",
   phoneDisplay: "0993 323 4360",
+  viberDisplay: "0977 116 4273",
   email: "alr_kitssa@yahoo.com"
 };
 
@@ -174,5 +175,27 @@ if (copyPhone) {
 if (copyEmail) {
   copyEmail.addEventListener("click", () => {
     copyText(CONTACT.email, "Email copied — paste it into your contacts app.");
+  });
+}
+
+const copyViber = document.getElementById("copyViber");
+const openViber = document.getElementById("openViber");
+
+if (copyViber) {
+  copyViber.addEventListener("click", () => {
+    copyText(CONTACT.viberDisplay, "Viber number copied — paste it into the Viber app.");
+  });
+}
+
+/* viber:// opens the app when it is installed. If nothing happens
+   after a moment, tell the user instead of leaving a dead tap. */
+if (openViber) {
+  openViber.addEventListener("click", () => {
+    setStatus("Opening Viber…");
+    window.setTimeout(() => {
+      if (!document.hidden) {
+        setStatus("Viber did not open — install Viber, or save the number " + CONTACT.viberDisplay + ".");
+      }
+    }, 1600);
   });
 }

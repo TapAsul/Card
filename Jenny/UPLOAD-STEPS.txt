@@ -1,0 +1,50 @@
+UPLOAD CHECKLIST — read before you upload
+================================================
+
+VERSION IN THIS ZIP: ?v=7  (index, contact, security-bank, bpi)
+If your live site still looks old after uploading, it is a CACHE issue:
+open the page in Chrome, or clear the Messenger app cache.
+
+1. UPLOAD EVERY FILE IN THIS FOLDER, INCLUDING:
+   - images/  (6 project photos + 2 bank logos + profile + ALR logo)
+   - Jenny-Joven-Beria-Phone.vcf
+   - Jenny-Joven-Beria-Viber.vcf   <- NEW, needed by the Save Number button
+   - Jenny-Joven-Beria-Email.vcf
+   - Jenny-Joven-Beria-ALR.vcf
+   - style.css   <- REQUIRED: fixes the highlight tiles rendering in one row
+
+2. DELETE THESE OLD FILES from your repo (they are gone from the project):
+   - gcash.html
+   - bdo.html
+   - images/gcash-qr.png
+   - images/bdo-qr.png
+
+3. WAIT ~2 MINUTES for GitHub Pages to rebuild.
+
+4. TEST IN A REAL BROWSER (Chrome on Android / Safari on iPhone),
+   not inside Messenger. In-app browsers hold onto old files.
+
+------------------------------------------------
+WHAT IS IN THIS BUILD
+------------------------------------------------
+- 6 project photos from the "Jenny" Google Drive folder, whole photo shown
+- Carousel captions: Stainless Steel Gate / Kitchen Hood / Table /
+  Food Display / Cabinet / Kitchen Equipment
+- Name block: Jenny Joven Beria > Sales Representative > ALR Steel...
+- Highlight tiles (2x2): Premium Quality / Custom Fabrication /
+  On-Time Delivery / Trusted Partner
+- What We Do: Residential, Hotel-Restaurant-Cafe, Custom Fabrication,
+  Range Hoods, Worktables & Shelving
+- Contacts split into Business (Facebook, TikTok, Email) and
+  Personal (Facebook, Instagram, Email)
+- Save Contact page: Mobile 0993 323 4360 / Viber 0977 116 4273 /
+  Email alr_kitssa@yahoo.com  +  Save Both
+- Payment Methods: Security Bank + BPI with official logos.
+  Account numbers are hidden on the card and shown only on each bank page.
+- Mobile fixes: no sideways scroll, iPhone safe areas, headings stack on
+  small screens, tighter spacing under 400px.
+
+------------------------------------------------
+STILL MISSING (add when you have them)
+------------------------------------------------
+- GCash number, if you want GCash back as a third payment option.

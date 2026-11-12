@@ -31,14 +31,28 @@ html {
   scroll-behavior: smooth;
 }
 
+html {
+  overflow-x: clip; /* no sideways scrolling on any phone */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
-  padding: 28px 16px 52px;
+  overflow-x: clip;
+  padding: 28px 16px calc(52px + env(safe-area-inset-bottom));
+  padding-left: calc(16px + env(safe-area-inset-left));
+  padding-right: calc(16px + env(safe-area-inset-right));
   background-color: var(--bg);
   color: var(--text);
   font-family: var(--sans);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+  max-width: 100%;
 }
 
 /* Fixed blurred work imagery behind everything */
@@ -395,9 +409,10 @@ a {
 
 .section-heading {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 12px;
+  gap: 2px 12px;
   margin: 0 4px 14px;
 }
 
@@ -413,14 +428,13 @@ a {
   color: var(--faint);
   font-size: 11.5px;
   text-align: right;
-  white-space: nowrap;
 }
 
 /* ---------- HIGHLIGHTS + COUNT-UP ---------- */
 
 .highlights {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -583,6 +597,7 @@ a {
 }
 
 .slide-text {
+  flex: 1;
   min-width: 0;
 }
 
@@ -731,6 +746,7 @@ a.bank-card:active {
 
 .social-handle {
   display: block;
+  overflow-wrap: anywhere;
   color: var(--faint);
   font-size: 11px;
   font-weight: 500;
@@ -786,8 +802,16 @@ a.bank-card:active {
 .bank-summary {
   display: flex;
   flex: 1;
+  min-width: 0;
   flex-direction: column;
   gap: 2px;
+}
+
+.bank-summary strong,
+.bank-summary small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .bank-summary strong {
@@ -939,7 +963,7 @@ a.bank-card:active {
 
 .payment-provider-logo {
   display: grid;
-  width: 160px;
+  width: min(160px, 62%);
   height: 62px;
   margin: 0 auto 16px;
   place-items: center;
@@ -1127,6 +1151,68 @@ a:focus-visible,
 
   .quick-actions {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Small phones — iPhone SE / 12-13 mini, most Androids */
+@media (max-width: 400px) {
+  body {
+    padding: 22px 12px calc(40px + env(safe-area-inset-bottom));
+  }
+
+  /* heading stacks so the title never gets squeezed */
+  .section-heading {
+    display: block;
+  }
+
+  .section-heading p {
+    margin-top: 3px;
+    text-align: left;
+  }
+
+  .highlights {
+    gap: 8px;
+  }
+
+  .highlight {
+    padding: 12px 4px 10px;
+  }
+
+  .stat-num {
+    font-size: 19px;
+  }
+
+  .highlight strong {
+    font-size: 11.5px;
+  }
+
+  .bank-logo {
+    width: 56px;
+    height: 38px;
+    padding: 5px 6px;
+  }
+
+  .bank-card {
+    min-height: 60px;
+    gap: 11px;
+    padding: 11px 12px;
+  }
+
+  .slide {
+    flex: 0 0 88%;
+  }
+
+  .carousel {
+    padding: 6px 6% 12px;
+  }
+
+  .payment-provider-logo {
+    width: min(150px, 68%);
+    height: 56px;
+  }
+
+  .payment-panel h1 {
+    font-size: 21px;
   }
 }
 
