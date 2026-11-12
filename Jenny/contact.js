@@ -187,14 +187,16 @@ if (copyViber) {
   });
 }
 
-/* viber:// opens the app when it is installed. If nothing happens
-   after a moment, tell the user instead of leaving a dead tap. */
-if (openViber) {
-  openViber.addEventListener("click", () => {
+/* The Viber number itself is a viber:// link. If the app is not
+   installed nothing happens, so tell the user instead of a dead tap. */
+const viberValue = document.querySelector('.contact-value[href^="viber:"]');
+
+if (viberValue) {
+  viberValue.addEventListener("click", () => {
     setStatus("Opening Viber…");
     window.setTimeout(() => {
       if (!document.hidden) {
-        setStatus("Viber did not open — install Viber, or save the number " + CONTACT.viberDisplay + ".");
+        setStatus("Viber did not open — install Viber, or just call " + CONTACT.viberDisplay + ".");
       }
     }, 1600);
   });
