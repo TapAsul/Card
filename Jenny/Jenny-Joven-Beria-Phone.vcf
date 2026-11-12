@@ -1,7 +1,8 @@
 BEGIN:VCARD
 VERSION:3.0
 FN:Jenny Joven Beria
+N:Beria;Jenny;Joven;;
 ORG:ALR Steel Fabrication and Services OPC
 TITLE:Sales Representative
-TEL;TYPE=CELL:+639933234360
+TEL;TYPE=CELL,VOICE:+639933234360
 END:VCARD

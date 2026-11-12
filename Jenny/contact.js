@@ -106,34 +106,97 @@ function activeGuide() {
 }
 
 /* ---------- Save buttons ----------
-   Plain file links — the browser handles the download
-   natively on every platform. JS only adds guidance. */
+   In a real browser the .vcf is re-served as a Blob with the
+   correct text/vcard MIME type, so iOS opens it straight into the
+   Contacts sheet ("Add All Contacts") and Android hands it to
+   Contacts on open. In-app browsers block downloads, so there we
+   leave the plain file link alone and show the guide instead. */
+
+function isIOS() {
+  const ua = navigator.userAgent || "";
+  return /iPad|iPhone|iPod/i.test(ua) ||
+    (navigator.platform === "MacIntel" && (navigator.maxTouchPoints || 0) > 1);
+}
+
+async function saveVcf(url, filename) {
+  try {
+    const response = await fetch(url, { cache: "no-store" });
+
+    if (!response.ok) return "missing";
+
+    const text = await response.text();
+    const blob = new Blob([text], { type: "text/vcard;charset=utf-8" });
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = objectUrl;
+    link.download = filename;
+    link.rel = "noopener";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 5000);
+    return "ok";
+  } catch (error) {
+    return "error"; // file:// preview, offline, or a locked-down webview
+  }
+}
 
 function bindSaveButton(id) {
   const button = document.getElementById(id);
   if (!button) return;
 
-  button.addEventListener("click", () => {
+  button.addEventListener("click", async (event) => {
     const guide = activeGuide();
+    const url = button.getAttribute("href");
+    const filename = button.getAttribute("download") || "contact.vcf";
 
-    if (IS_ANDROID) {
-      setStatus("File downloading — tap Save File, then Open File to import it into Contacts.");
-    } else if (INAPP_NAME) {
+    function showGuide() {
+      if (guide) guide.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    // In-app webviews (Messenger / Instagram / TikTok) block downloads:
+    // let the real file link do its thing and just coach the user.
+    if (INAPP_NAME) {
       setStatus(
         "If nothing downloads, open this page in " + systemBrowser() +
         " (tap \u22EF above) and try again."
       );
-    } else {
-      setStatus("Contact file downloading. Open it to save the contact.");
+      showGuide();
+      return;
     }
 
-    if (guide) {
-      guide.scrollIntoView({ behavior: "smooth", block: "center" });
+    event.preventDefault();
+    const result = await saveVcf(url, filename);
+
+    if (result === "ok") {
+      if (isIOS()) {
+        setStatus("Opening the contact - tap \u201CAdd All Contacts\u201D to save it.");
+      } else if (IS_ANDROID) {
+        setStatus("File saved - tap Open File to import it into Contacts.");
+        showGuide();
+      } else {
+        setStatus("Contact file downloading. Open it to save the contact.");
+      }
+      return;
     }
+
+    if (result === "missing") {
+      setStatus(
+        "The contact file could not be found on the server. " +
+        "Upload the .vcf files next to contact.html and try again."
+      );
+      return;
+    }
+
+    // Blob download unavailable (e.g. opened straight from a file):
+    // fall back to the normal link behaviour.
+    if (url) window.location.href = url;
+    setStatus("Contact file downloading. Open it to save the contact.");
   });
 }
 
 bindSaveButton("savePhone");
+bindSaveButton("saveViber");
 bindSaveButton("saveEmail");
 bindSaveButton("saveBoth");
 
