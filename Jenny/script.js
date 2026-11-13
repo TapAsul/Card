@@ -236,12 +236,6 @@ async function downloadVcf(url, filename) {
 }
 
 async function saveAllContacts() {
-  // In-app browsers block downloads - use the page that guides the user.
-  if (detectInApp()) {
-    openContactPage();
-    return;
-  }
-
   say("Preparing contact…");
   const result = await downloadVcf(ALL_CONTACTS_VCF, ALL_CONTACTS_VCF);
 
@@ -256,8 +250,24 @@ async function saveAllContacts() {
     return;
   }
 
-  // Blob path unavailable or file missing - fall back to the plain link.
-  openContactPage();
+  /* The contact file is missing on the server: say so instead of
+     silently bouncing the visitor to another page. */
+  if (result === "missing") {
+    say("Contact file not found on the server - upload Jenny-Joven-Beria-ALR.vcf next to index.html.");
+    return;
+  }
+
+  /* Blob download was blocked (in-app browser, or opened from a file).
+     Hand the file to the browser directly - never redirect to
+     contact.html from here, the visitor asked to SAVE. */
+  window.location.href = ALL_CONTACTS_VCF;
+
+  if (detectInApp()) {
+    say("If nothing downloads, open this card in " + (isIOS() ? "Safari" : "Chrome") +
+        " (tap \u22EF above) and tap Save again.");
+  } else {
+    say("Contact file downloading. Open it to save the contact.");
+  }
 }
 
 if (saveButton) saveButton.addEventListener("click", saveAllContacts);
